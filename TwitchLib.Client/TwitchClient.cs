@@ -402,6 +402,11 @@ namespace TwitchLib.Client
         /// Fires when data is received from Twitch that is not able to be parsed.
         /// </summary>
         public event EventHandler<OnUnaccountedForArgs> OnUnaccountedFor;
+
+        /// <summary>
+        /// Fires when a message couldn't be sent.
+        /// </summary>
+        public event EventHandler<OnSendFailedEventArgs> OnSendFailed;
         #endregion
 
         #region Construction Work
@@ -511,6 +516,8 @@ namespace TwitchLib.Client
             _client.OnMessageThrottled += _client_OnMessageThrottled;
             _client.OnWhisperThrottled += _client_OnWhisperThrottled;
             _client.OnReconnected += _client_OnReconnected;
+            _client.OnError += _client_OnError;
+            _client.OnSendFailed += _client_OnSendFailed;
         }
 
         #endregion
@@ -548,7 +555,17 @@ namespace TwitchLib.Client
         private void SendTwitchMessage(JoinedChannel channel, string message, string replyToId = null, bool dryRun = false)
         {
             if (!IsInitialized) HandleNotInitialized();
-            if (channel == null || message == null || dryRun) return;
+            if (dryRun) return;
+            if (channel == null)
+            {
+                LogError("No channel specified.");
+                return;
+            }
+            if (string.IsNullOrEmpty(message))
+            {
+                LogError("No message specified.");
+                return;
+            }
             if (message.Length > 500)
             {
                 LogError("Message length has exceeded the maximum character count. (500)");
@@ -569,7 +586,10 @@ namespace TwitchLib.Client
             _lastMessageSent = message;
 
 
-            _client.Send(twitchMessage.ToString());
+            if (!_client.Send(twitchMessage.ToString()))
+            {
+                LogError($"Message \"{message}\" couldn't be sent to \"{channel.Channel}\".");
+            }
         }
 
         /// <summary>
@@ -919,6 +939,27 @@ namespace TwitchLib.Client
             {
                 QueueingJoinCheck();
             }
+        }
+
+        /// <summary>
+        /// Handles the OnSendFailed event of the _client control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="OnSendFailedEventArgs" /> instance containing the event data.</param>
+        private void _client_OnSendFailed(object sender, OnSendFailedEventArgs e)
+        {
+            OnSendFailed(sender, e);
+        }
+
+        /// <summary>
+        /// Handles the OnError event of the _client control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="OnErrorEventArgs" /> instance containing the event data.</param>
+
+        private void _client_OnError(object sender, OnErrorEventArgs e)
+        {
+            OnError?.Invoke(sender, e);
         }
 
         #endregion
