@@ -406,7 +406,12 @@ namespace TwitchLib.Client
         /// <summary>
         /// Fires when a message couldn't be sent.
         /// </summary>
-        public event EventHandler<OnSendFailedEventArgs> OnSendFailed;
+        public event EventHandler<OnSendFailedEventArgs> OnSendFailed;       
+        
+        /// <summary>
+        /// Fires whenever a message is received.
+        /// </summary>
+        public event EventHandler OnHeartbeat;
         #endregion
 
         #region Construction Work
@@ -912,6 +917,7 @@ namespace TwitchLib.Client
                 OnSendReceiveData?.Invoke(this, new OnSendReceiveDataArgs { Direction = Enums.SendReceiveDirection.Received, Data = line });
                 HandleIrcMessage(_ircParser.ParseIrcMessage(line));
             }
+            OnHeartbeat?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
