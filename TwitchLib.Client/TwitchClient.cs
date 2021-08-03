@@ -868,7 +868,7 @@ namespace TwitchLib.Client
         /// <param name="e">The <see cref="OnWhisperThrottledEventArgs" /> instance containing the event data.</param>
         private void _client_OnWhisperThrottled(object sender, OnWhisperThrottledEventArgs e)
         {
-            OnWhisperThrottled?.Invoke(sender, e);
+            OnWhisperThrottled?.Invoke(this, e);
         }
 
         /// <summary>
@@ -878,7 +878,7 @@ namespace TwitchLib.Client
         /// <param name="e">The <see cref="OnMessageThrottledEventArgs" /> instance containing the event data.</param>
         private void _client_OnMessageThrottled(object sender, OnMessageThrottledEventArgs e)
         {
-            OnMessageThrottled?.Invoke(sender, e);
+            OnMessageThrottled?.Invoke(this, e);
         }
 
         /// <summary>
@@ -898,7 +898,7 @@ namespace TwitchLib.Client
         /// <param name="e">The <see cref="OnDisconnectedEventArgs" /> instance containing the event data.</param>
         private void _client_OnDisconnected(object sender, OnDisconnectedEventArgs e)
         {
-            OnDisconnected?.Invoke(sender, e);
+            OnDisconnected?.Invoke(this, e);
             _joinedChannelManager.Clear();
         }
 
@@ -909,7 +909,7 @@ namespace TwitchLib.Client
         /// <param name="e">The <see cref="OnReconnectedEventArgs" /> instance containing the event data.</param>
         private void _client_OnReconnected(object sender, OnReconnectedEventArgs e)
         {
-            OnReconnected?.Invoke(sender, e);
+            OnReconnected?.Invoke(this, e);
         }
 
         /// <summary>
@@ -975,7 +975,7 @@ namespace TwitchLib.Client
 
         private void _client_OnError(object sender, OnErrorEventArgs e)
         {
-            OnError?.Invoke(sender, e);
+            OnError?.Invoke(this, e);
         }
 
         #endregion
