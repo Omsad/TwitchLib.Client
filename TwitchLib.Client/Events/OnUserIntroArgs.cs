@@ -4,16 +4,16 @@ using TwitchLib.Client.Models;
 namespace TwitchLib.Client.Events
 {
     /// <summary>
-    /// Args representing hosting started event.
+    /// Args representing a PRIVMSG that represents a User Intro
     /// Implements the <see cref="System.EventArgs" />
     /// </summary>
     /// <seealso cref="System.EventArgs" />
     /// <inheritdoc />
-    public class OnHostingStartedArgs : EventArgs
+    public class OnUserIntroArgs : EventArgs
     {
         /// <summary>
-        /// Property representing hosting channel.
+        /// Property representing the PRIVMSG
         /// </summary>
-        public HostingStarted HostingStarted;
+        public ChatMessage ChatMessage;
     }
 }

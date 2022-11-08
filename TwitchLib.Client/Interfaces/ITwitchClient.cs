@@ -47,11 +47,6 @@ namespace TwitchLib.Client.Interfaces
         /// <value>The joined channels.</value>
         IReadOnlyList<JoinedChannel> JoinedChannels { get; }
         /// <summary>
-        /// Gets or sets a value indicating whether [override being hosted check].
-        /// </summary>
-        /// <value><c>true</c> if [override being hosted check]; otherwise, <c>false</c>.</value>
-        bool OverrideBeingHostedCheck { get; set; }
-        /// <summary>
         /// Gets the previous whisper.
         /// </summary>
         /// <value>The previous whisper.</value>
@@ -66,11 +61,6 @@ namespace TwitchLib.Client.Interfaces
         /// </summary>
         /// <value><c>true</c> if [will replace emotes]; otherwise, <c>false</c>.</value>
         bool WillReplaceEmotes { get; set; }
-
-        /// <summary>
-        /// Occurs when [on being hosted].
-        /// </summary>
-        event EventHandler<OnBeingHostedArgs> OnBeingHosted;
         /// <summary>
         /// Occurs when [on channel state changed].
         /// </summary>
@@ -107,18 +97,6 @@ namespace TwitchLib.Client.Interfaces
         /// Occurs when [on gifted subscription].
         /// </summary>
         event EventHandler<OnGiftedSubscriptionArgs> OnGiftedSubscription;
-        /// <summary>
-        /// Occurs when [on hosting started].
-        /// </summary>
-        event EventHandler<OnHostingStartedArgs> OnHostingStarted;
-        /// <summary>
-        /// Occurs when [on hosting stopped].
-        /// </summary>
-        event EventHandler<OnHostingStoppedArgs> OnHostingStopped;
-        /// <summary>
-        /// Occurs when [on host left].
-        /// </summary>
-        event EventHandler OnHostLeft;
         /// <summary>
         /// Occurs when [on incorrect login].
         /// </summary>
@@ -159,10 +137,6 @@ namespace TwitchLib.Client.Interfaces
         /// Occurs when [on new subscriber].
         /// </summary>
         event EventHandler<OnNewSubscriberArgs> OnNewSubscriber;
-        /// <summary>
-        /// Occurs when [on now hosting].
-        /// </summary>
-        event EventHandler<OnNowHostingArgs> OnNowHosting;
         /// <summary>
         /// Occurs when [on raid notification].
         /// </summary>
@@ -237,9 +211,29 @@ namespace TwitchLib.Client.Interfaces
         event EventHandler<OnMessageClearedArgs> OnMessageCleared;
 
         /// <summary>
-        /// Occurs when [on ritual for new chatter received].
+        /// Occurs when chatting in a channel that requires a verified email without a verified email attached to the account.
         /// </summary>
-        event EventHandler<OnRitualNewChatterArgs> OnRitualNewChatter;
+        event EventHandler<OnRequiresVerifiedEmailArgs> OnRequiresVerifiedEmail;
+
+        /// <summary>
+        /// Occurs when chatting in a channel that requires a verified phone number without a verified phone number attached to the account.
+        /// </summary>
+        event EventHandler<OnRequiresVerifiedPhoneNumberArgs> OnRequiresVerifiedPhoneNumber;
+
+        /// <summary>
+        /// Occurs when chatting in a channel that the user is banned in bcs of an already banned alias with the same Email
+        /// </summary>
+        event EventHandler<OnBannedEmailAliasArgs> OnBannedEmailAlias;
+
+        /// <summary>
+        /// Fires when the client receives a PRIVMSG tagged as an user-intro
+        /// </summary>
+        event EventHandler<OnUserIntroArgs> OnUserIntro;
+
+        /// <summary>
+        /// Fires when the client receives a USERNOTICE tagged as an announcement
+        /// </summary>
+        event EventHandler<OnAnnouncementArgs> OnAnnouncement;
 
         /// <summary>
         /// Initializes the specified credentials.
