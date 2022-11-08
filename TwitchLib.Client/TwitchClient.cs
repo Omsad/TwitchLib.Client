@@ -964,7 +964,7 @@ namespace TwitchLib.Client
         /// <param name="e">The <see cref="OnSendFailedEventArgs" /> instance containing the event data.</param>
         private void _client_OnSendFailed(object sender, OnSendFailedEventArgs e)
         {
-            OnSendFailed(sender, e);
+            OnSendFailed?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -1582,6 +1582,16 @@ namespace TwitchLib.Client
         protected static void HandleNotConnected()
         {
             throw new ClientNotConnectedException("In order to perform this action, the client must be connected to Twitch. To confirm connection, try performing this action in or after the OnConnected event has been fired.");
+        }
+
+        /// <summary>
+        /// Disconencts and disposes of the Twitch client.
+        /// </summary>
+        public void Dispose()
+        {
+            Disconnect();
+            _client?.Dispose();
+            _client = null;
         }
     }
 }
