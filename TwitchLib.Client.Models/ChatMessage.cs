@@ -271,7 +271,7 @@ namespace TwitchLib.Client.Models
             }
 
             //Parse the emoteSet
-            if (EmoteSet != null && Message != null && EmoteSet.Emotes.Count > 0)
+            if (replaceEmotes && EmoteSet != null && Message != null && EmoteSet.Emotes.Count > 0)
             {
                 var uniqueEmotes = EmoteSet.RawEmoteSetString.Split('/');
                 foreach (var emote in uniqueEmotes)
@@ -296,10 +296,11 @@ namespace TwitchLib.Client.Models
                         }
                     }
                 }
-                if (replaceEmotes)
-                {
-                    EmoteReplacedMessage = _emoteCollection.ReplaceEmotes(Message);
-                }
+                
+                //if (replaceEmotes)
+                //{
+                //    EmoteReplacedMessage = _emoteCollection.ReplaceEmotes(Message);
+                //}
             }
 
             if (EmoteSet == null)
